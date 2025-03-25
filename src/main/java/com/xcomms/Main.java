@@ -1,16 +1,21 @@
 package com.xcomms;
 
+import java.util.Collections;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Main {
     public static void main(String[] args) {
+        SpringApplication app = new SpringApplication(Main.class);
+        app.setDefaultProperties(Collections.singletonMap("server.port", "8081"));
         SpringApplication.run(Main.class, args);
 
-
+        
         // moderator.isOkay("");
         // DataManager dm = new DataManager();
+        // dm.executeSQL("CREATE TABLE Rooms(id INTEGER, private BOOL, password varchar(255), name varchar(255))");
         // dm.runSQL("CREATE TABLE Users(Username VARCHAR(50), Password VARCHAR(255));");
         // dm.runSQL("INSERT INTO Messages(Content) VALUES ('hi')");
         // dm.runSQL("DELETE FROM Users WHERE Username='itz_inevitable'");

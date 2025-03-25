@@ -22,37 +22,23 @@ import org.springframework.http.HttpStatus;
 @RequestMapping("/api")
 public class Controller {
 
-    
+    //global variables
     final DataManager dm = new DataManager();
 
+    
 
-    @PostMapping(value="/debugging/signin")
-    @ResponseStatus(HttpStatus.OK)
-    public String authentication(@RequestBody Client client){
-        if(client.getPass().equals("18o!sfIbhbp")){
-            return "authenticated";
-        }
-        return "get the frick out";
-    }
-
-    @PostMapping(value="/debugging/get")
-    @ResponseStatus(HttpStatus.OK)
-    public String runQuery(@RequestBody SQLQuery query){
-        System.out.println(query.getQuery());
-
-        if(query.getBool() == true){
-            return Arrays.toString(dm.querySQL(query.getQuery()));
-        }else{
-            dm.executeSQL(query.getQuery());
-        }
-        return "";
-    }
+    //testing
 
     @GetMapping(value = "/testing")
     @ResponseStatus(HttpStatus.OK)
     public String testing(){
         return "Render deployed correcctly.";
     }
+
+
+
+    //login stuff
+
 
     @PostMapping(value = "/login/signin", consumes = "application/json; UTF-8")
     @ResponseStatus(HttpStatus.OK)
@@ -75,66 +61,65 @@ public class Controller {
         return "New Client!";
     }
 
-    @PostMapping(value = "/msg/send", consumes = "application/json;UTF-8")
-    @ResponseStatus(HttpStatus.OK)
-    public void sendMessage(@RequestBody String rawData){
-        System.out.println(rawData);
-        JSONTokener tokener = new JSONTokener(rawData);
-        JSONObject json = new JSONObject(tokener);
 
-        Client client = new Client();
-        client.setUsername(json.getString("username"));
-        client.setReciever(json.getString("reciever"));
+
+
+
+    //room management
+
+
+
+
+    @PostMapping(value = "/room/create", consumes = "application/json; UTF-8")
+    @ResponseStatus(HttpStatus.OK)
+    public void createRoom(@RequestBody String json){
+        JSONObject payload = new JSONObject(json);
+        dm.addRoom(payload.getInt("id"), payload.getBoolean("private"), payload.getString("password"), payload.getString("name"));
+
         
-        dm.addMessage(client, json.getString("message"));
-        // System.out.println(client.toString());
     }
 
-    @GetMapping(value = "/msg/get/{username}")
-    @ResponseStatus(HttpStatus.OK)
-    public String getMessage(@PathVariable String username){
-        Message[] messages = dm.getMessages(username);
-        System.out.println(username);
-        JSONObject jsonObject = new JSONObject(); 
 
-        String currentUsername = "";
-        JSONArray jsonMessages = new JSONArray();
-        JSONObject jsonFormat = new JSONObject();
-        int count = 0;
-        for(int i = 0; i < messages.length; i++){
-            // jsonMessages.put(messages[i].getContent());
-            if(messages[i].getContent() == null){
-                return "{}";
-            }
-            if(messages[i].getSender().equals(currentUsername) == false){
-                currentUsername = messages[i].getSender();
-                jsonFormat.put("Messenger", currentUsername);
-                jsonFormat.put("Messages", jsonMessages.toString());
-                jsonObject.put(Integer.toString(count), jsonFormat);
-                jsonFormat = new JSONObject();
-                jsonMessages = new JSONArray();
-                count++;
-            }
-        }
 
-        System.out.println(jsonMessages.toString());
-        System.out.println(jsonObject.toString());
 
-        return jsonObject.toString();
-    }
+
+
+
+   
 }
 
 /*
  
-@RequestMapping ->
-    -generic, covers ->  
-        - get, post, delete, put
+JSON structure for rooms
 
-    @GetMapping - handles get requests
-    @PostMapping - handles put requests (can pick data process type) ex. application/json;UTF-8
+{
+    id=automaticaly generated,
+    private=false,
+    password="bestpasswordtrust",
+    name="yapping abt life..."
+}
 
-    
+
 
 
 
  */
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

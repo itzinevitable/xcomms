@@ -11,16 +11,28 @@ import java.util.Set;
 
 public class DataManager {
 
+
+
+    //global variables
     private Client[] registeredClients = getClients();
     // private Client[] registeredClients = null;
-    final String databaseURL = "jdbc:postgresql://****";
+    final String databaseURL = "jdbc:postgresql://pg-24a4a67c-springbootapi.h.aivencloud.com:10193/defaultdb?sslmode=require";
     final String username = "avnadmin";
-    final String password = "*******";
+    final String password = "AVNS_1E5FZpr-OIOurXHQohD";
 
-    public void addMessage(Client client, String message){
-        String sql = "INSERT INTO Messages(Messenger, Content, Reciever) VALUES('" + client.getUser() + "', '" + message + "', '" + client.getReciever() + "')";
-        executeSQL(sql);
-    }
+
+
+
+
+
+
+
+
+
+
+    //Client Management
+
+
 
     public boolean hasUsername(String username){
         for(int i = 0; i < registeredClients.length; i++){
@@ -40,11 +52,17 @@ public class DataManager {
         return false;
     }
 
+
+
+
     public void registerNewUser(Client newClient){
         String sql = "INSERT INTO Users (Username, Password) VALUES('" + newClient.getUser() + "', '" + newClient.getPass() + "')";
         executeSQL(sql);
         registeredClients = getClients();
     }
+
+
+
 
     public int getTableLength(String table){
         try(Connection conn = DriverManager.getConnection(databaseURL, username, password)){
@@ -59,30 +77,7 @@ public class DataManager {
         return 0;
     }
 
-    public Message[] getMessages(String user){
-        String sql = "SELECT * FROM Messages WHERE Reciever='" + user + "' ORDER BY Messenger DESC";
-        Set<Message> messages = new HashSet<>();
 
-        try(Connection conn = DriverManager.getConnection(databaseURL, username, password)){
-            Statement stmnt = conn.createStatement();
-            ResultSet rs = stmnt.executeQuery(sql);
-            while(rs.next()){
-                Message msg = new Message(rs.getString(2), rs.getString(1));
-                System.out.println(msg.toString());
-                messages.add(msg);
-            }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-
-        Message[] output = new Message[messages.size()];
-        int i = 0;
-        for(Message m : messages){
-            output[i] = m;
-        }
-        // runSQL("DELETE FROM Messages WHERE Reciever='" + user + "'");
-        return output;
-    }
     
     private Client[] getClients(){
         String sql = "SELECT * FROM Users";
@@ -114,6 +109,44 @@ public class DataManager {
     }
 
 
+
+
+    //Room Management
+    public void addRoom(int id, boolean isPrivate, String password, String name){
+        String sql = ""
+            + "INSERT INTO Rooms(id, private, password, name)"
+            + "VALUES("
+            + id + ", "
+            + isPrivate + ", '"
+            + password + "', "
+            + username + "', ";
+
+        executeSQL(sql);
+    }
+
+    public void deleteRoom(int id){
+        String sql = ""
+            + "DELETE FROM Rooms WHERE "
+            + "id=" + id;
+    }
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    //SQL Connection/execution functions
+
+
+
     public void executeSQL(String sql){
         try(Connection conn = DriverManager.getConnection(databaseURL, username, password)){
             Statement stmnt = conn.createStatement();
@@ -129,6 +162,10 @@ public class DataManager {
             e.printStackTrace();
         }
     }
+
+
+
+
 
     public String[] querySQL(String sql){
         String[] output = new String[3];
