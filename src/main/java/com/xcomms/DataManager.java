@@ -62,22 +62,6 @@ public class DataManager {
     }
 
 
-
-
-    public int getTableLength(String table){
-        try(Connection conn = DriverManager.getConnection(databaseURL, username, password)){
-            Statement stmnt = conn.createStatement();
-            ResultSet rs = stmnt.executeQuery("SELECT COUNT(*) FROM Users");
-            rs.next();
-            return rs.getInt(1);
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-
-        return 0;
-    }
-
-
     
     private Client[] getClients(){
         String sql = "SELECT * FROM Users";
@@ -130,6 +114,29 @@ public class DataManager {
             + "id=" + id;
         executeSQL(sql);
     }
+
+    public Room[] getRooms(){
+
+        String sql = "SELECT * FROM Rooms";
+        Room[] output = new Room[getTableLength("Rooms")];
+        int index = 0;
+
+        try(Connection conn = DriverManager.getConnection(databaseURL, username, password)){
+            Statement stmnt = conn.createStatement();
+            ResultSet rs = stmnt.executeQuery(sql);
+
+            while(rs.next()){
+                output[index] = new Room(rs.getInt(1), rs.getBoolean(2), rs.getString(3), rs.getString(4));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return output;
+
+    }
+
 
     
 
@@ -187,5 +194,20 @@ public class DataManager {
         }
 
         return output;
+    }
+
+
+
+    public int getTableLength(String table){
+        try(Connection conn = DriverManager.getConnection(databaseURL, username, password)){
+            Statement stmnt = conn.createStatement();
+            ResultSet rs = stmnt.executeQuery("SELECT COUNT(*) FROM " + table);
+            rs.next();
+            return rs.getInt(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 }

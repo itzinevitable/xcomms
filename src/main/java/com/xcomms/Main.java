@@ -8,13 +8,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(Main.class);
-        app.setDefaultProperties(Collections.singletonMap("server.port", "8081"));
-        SpringApplication.run(Main.class, args);
+        // SpringApplication app = new SpringApplication(Main.class);
+        // app.setDefaultProperties(Collections.singletonMap("server.port", "8081"));
+        // SpringApplication.run(Main.class, args);
 
         
         // moderator.isOkay("");
-        // DataManager dm = new DataManager();
+        DataManager dm = new DataManager();
+        Room[] output = dm.getRooms();
+
+        for(int i = 0; i < output.length; i++){
+            System.out.println(output[i].toString());
+        }
         // dm.executeSQL("CREATE TABLE Rooms(id INTEGER, private BOOL, password varchar(255), name varchar(255))");
         // dm.runSQL("CREATE TABLE Users(Username VARCHAR(50), Password VARCHAR(255));");
         // dm.runSQL("INSERT INTO Messages(Content) VALUES ('hi')");
