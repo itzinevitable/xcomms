@@ -128,6 +128,7 @@ public class DataManager {
         String sql = ""
             + "DELETE FROM Rooms WHERE "
             + "id=" + id;
+        executeSQL(sql);
     }
 
     

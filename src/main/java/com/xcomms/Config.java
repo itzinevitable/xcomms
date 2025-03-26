@@ -11,7 +11,7 @@ public class Config implements WebMvcConfigurer{
     @Override
     public void addCorsMappings(@NonNull CorsRegistry registry){
         registry.addMapping("/**")
-            .allowedOrigins("https://nichechat.vercel.app", "http://localhost:5050")
+            .allowedOrigins("*")
             .allowedMethods("*")
             .allowedHeaders("*");
     }
