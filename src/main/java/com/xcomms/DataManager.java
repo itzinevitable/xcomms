@@ -16,10 +16,10 @@ public class DataManager {
     //global variables
     private Client[] registeredClients = getClients();
     // private Client[] registeredClients = null;
-    private final String databaseURL = "****";
+    private final String databaseURL = "jdbc:postgresql://pg-24a4a67c-springbootapi.h.aivencloud.com:10193/defaultdb?sslmode=require";
     // private final String databaseURL = "jdbc:sqlite:database.db";
     private final String username = "avnadmin";
-    private final String password = "*****";
+    private final String password = "AVNS_1E5FZpr-OIOurXHQohD";
     private Room[] rooms = null;
 
 
