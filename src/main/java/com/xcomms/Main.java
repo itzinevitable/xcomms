@@ -10,11 +10,11 @@ public class Main {
     public static void main(String[] args) {
         // SpringApplication app = new SpringApplication(Main.class);
         // app.setDefaultProperties(Collections.singletonMap("server.port", "8081"));
-        // SpringApplication.run(Main.class, args);
+        SpringApplication.run(Main.class, args);
 
         
         // moderator.isOkay("");
-        DataManager dm = new DataManager();
+        // DataManager dm = new DataManager();
 
         // Room[] output = dm.getRooms();
 
