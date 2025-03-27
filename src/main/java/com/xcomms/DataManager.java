@@ -16,12 +16,15 @@ public class DataManager {
     //global variables
     private Client[] registeredClients = getClients();
     // private Client[] registeredClients = null;
-    final String databaseURL = "jdbc:postgresql://pg-24a4a67c-springbootapi.h.aivencloud.com:10193/defaultdb?sslmode=require";
-    final String username = "avnadmin";
-    final String password = "AVNS_1E5FZpr-OIOurXHQohD";
+    private final String databaseURL = "jdbc:postgresql://pg-24a4a67c-springbootapi.h.aivencloud.com:10193/defaultdb?sslmode=require";
+    private final String username = "avnadmin";
+    private final String password = "AVNS_1E5FZpr-OIOurXHQohD";
+    private Room[] rooms = null;
 
 
-
+    public DataManager(){
+        rooms = getRooms();
+    }
 
 
 
@@ -96,14 +99,15 @@ public class DataManager {
 
 
     //Room Management
-    public void addRoom(int id, boolean isPrivate, String password, String name){
+    public void addRoom(int id, boolean isPrivate, String password, String name, int capacity){
         String sql = ""
             + "INSERT INTO Rooms(id, private, password, name)"
             + "VALUES("
             + id + ", "
             + isPrivate + ", '"
             + password + "', "
-            + username + "', ";
+            + username + "', "
+            + capacity + ";";
 
         executeSQL(sql);
     }
@@ -126,7 +130,7 @@ public class DataManager {
             ResultSet rs = stmnt.executeQuery(sql);
 
             while(rs.next()){
-                output[index] = new Room(rs.getInt(1), rs.getBoolean(2), rs.getString(3), rs.getString(4));
+                output[index] = new Room(rs.getInt(1), rs.getBoolean(2), rs.getString(3), rs.getString(4), rs.getInt(5));
             }
 
         } catch (SQLException e) {
@@ -134,6 +138,34 @@ public class DataManager {
         }
 
         return output;
+
+    }
+
+    public Room[] getGlobalRooms(){
+        return rooms;
+    }
+
+    public boolean containsId(int id){
+        int left = 0;
+        int right = rooms.length -1;
+
+        while(left <= right){
+            int mid = left + (right - left) / 2;
+
+            if(rooms[mid].id == id){
+                return true;
+            }
+            if (rooms[mid].id < id) {
+                left = mid + 1;
+            } 
+            // If target is smaller, ignore the right half
+            else {
+                right = mid - 1;
+            }
+        }
+
+        return false;
+
 
     }
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import org.json.*;
 
@@ -34,8 +35,6 @@ public class Controller {
     public String testing(){
         return "Render deployed correcctly.";
     }
-
-
 
     //login stuff
 
@@ -74,9 +73,22 @@ public class Controller {
     @ResponseStatus(HttpStatus.OK)
     public void createRoom(@RequestBody String json){
         JSONObject payload = new JSONObject(json);
-        dm.addRoom(payload.getInt("id"), payload.getBoolean("private"), payload.getString("password"), payload.getString("name"));
 
         
+        dm.addRoom(payload.getInt("id"), payload.getBoolean("private"), payload.getString("password"), payload.getString("name"), payload.getInt("capacity"));
+
+        
+    }
+
+    private int generateId(){
+        Random rand = new Random();
+        int id = 1000 + rand.nextInt(9000);
+
+        while(dm.containsId(id) == true){
+            id = 1000 + rand.nextInt(9000);
+        }
+
+        return id; 
     }
 
 
