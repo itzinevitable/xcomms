@@ -146,6 +146,10 @@ public class DataManager {
         return rooms;
     }
 
+    public void updateRooms(){
+        rooms = getRooms();
+    }
+
     public boolean containsId(int id){
         int left = 0;
         int right = rooms.length -1;
@@ -163,7 +167,7 @@ public class DataManager {
                 right = mid - 1;
             }
         }
-        rooms=getRooms();
+
         return false;
 
 

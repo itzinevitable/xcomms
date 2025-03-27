@@ -77,7 +77,7 @@ public class Controller {
         
         dm.addRoom(payload.getInt("id"), payload.getBoolean("private"), payload.getString("password"), payload.getString("name"), payload.getInt("capacity"));
 
-        
+        dm.updateRooms();
     }
 
     private int generateId(){
@@ -88,6 +88,8 @@ public class Controller {
         while(dm.containsId(id) == true){
             id = 1000 + rand.nextInt(9000);
         }
+
+        
 
         return id; 
     }
