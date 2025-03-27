@@ -163,7 +163,7 @@ public class DataManager {
                 right = mid - 1;
             }
         }
-
+        rooms=getRooms();
         return false;
 
 
