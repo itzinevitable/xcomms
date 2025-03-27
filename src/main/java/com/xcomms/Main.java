@@ -15,13 +15,14 @@ public class Main {
         
         // moderator.isOkay("");
         DataManager dm = new DataManager();
-        Room[] output = dm.getRooms();
 
-        for(int i = 0; i < output.length; i++){
-            System.out.println(output[i].toString());
-        }
+        // Room[] output = dm.getRooms();
+
+        // for(int i = 0; i < output.length; i++){
+        //     System.out.println(output[i].toString());
+        // }
         // dm.executeSQL("CREATE TABLE Rooms(id INTEGER, private BOOL, password varchar(255), name varchar(255))");
-        // dm.runSQL("CREATE TABLE Users(Username VARCHAR(50), Password VARCHAR(255));");
+        dm.executeSQL("CREATE TABLE Users(Username VARCHAR(50), Password VARCHAR(255));");
         // dm.runSQL("INSERT INTO Messages(Content) VALUES ('hi')");
         // dm.runSQL("DELETE FROM Users WHERE Username='itz_inevitable'");
         // System.out.println(dm.getTableLength(""));

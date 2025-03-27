@@ -16,9 +16,10 @@ public class DataManager {
     //global variables
     private Client[] registeredClients = getClients();
     // private Client[] registeredClients = null;
-    private final String databaseURL = "jdbc:postgresql://pg-24a4a67c-springbootapi.h.aivencloud.com:10193/defaultdb?sslmode=require";
+    private final String databaseURL = "****";
+    // private final String databaseURL = "jdbc:sqlite:database.db";
     private final String username = "avnadmin";
-    private final String password = "AVNS_1E5FZpr-OIOurXHQohD";
+    private final String password = "*****";
     private Room[] rooms = null;
 
 
@@ -101,14 +102,14 @@ public class DataManager {
     //Room Management
     public void addRoom(int id, boolean isPrivate, String password, String name, int capacity){
         String sql = ""
-            + "INSERT INTO Rooms(id, private, password, name)"
+            + "INSERT INTO Rooms(id, private, password, name, capacity)"
             + "VALUES("
             + id + ", "
             + isPrivate + ", '"
-            + password + "', "
-            + username + "', "
-            + capacity + ";";
-
+            + password + "', '"
+            + name + "', "
+            + capacity + ");";
+        System.out.println(sql);
         executeSQL(sql);
     }
 
@@ -158,7 +159,6 @@ public class DataManager {
             if (rooms[mid].id < id) {
                 left = mid + 1;
             } 
-            // If target is smaller, ignore the right half
             else {
                 right = mid - 1;
             }

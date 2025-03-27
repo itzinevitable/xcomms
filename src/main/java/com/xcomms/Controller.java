@@ -73,7 +73,7 @@ public class Controller {
     @ResponseStatus(HttpStatus.OK)
     public void createRoom(@RequestBody String json){
         JSONObject payload = new JSONObject(json);
-
+        payload.put("id", generateId());
         
         dm.addRoom(payload.getInt("id"), payload.getBoolean("private"), payload.getString("password"), payload.getString("name"), payload.getInt("capacity"));
 
@@ -83,6 +83,7 @@ public class Controller {
     private int generateId(){
         Random rand = new Random();
         int id = 1000 + rand.nextInt(9000);
+        id = 4975;
 
         while(dm.containsId(id) == true){
             id = 1000 + rand.nextInt(9000);
