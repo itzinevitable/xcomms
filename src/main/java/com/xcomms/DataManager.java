@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,6 +26,10 @@ public class DataManager {
 
     public DataManager(){
         rooms = getRooms();
+        System.out.println(Arrays.toString(rooms));
+        for(Room room : rooms){
+            System.out.println(room.toString());
+        }
     }
 
 
@@ -99,6 +104,18 @@ public class DataManager {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     //Room Management
     public void addRoom(int id, boolean isPrivate, String password, String name, int capacity){
         String sql = ""
@@ -123,7 +140,7 @@ public class DataManager {
     public Room[] getRooms(){
 
         String sql = "SELECT * FROM Rooms";
-        Room[] output = new Room[getTableLength("Rooms")];
+        Room[] output = new Room[getTableLength("rooms")];
         int index = 0;
 
         try(Connection conn = DriverManager.getConnection(databaseURL, username, password)){
@@ -131,7 +148,10 @@ public class DataManager {
             ResultSet rs = stmnt.executeQuery(sql);
 
             while(rs.next()){
-                output[index] = new Room(rs.getInt(1), rs.getBoolean(2), rs.getString(3), rs.getString(4), rs.getInt(5));
+                Room newRoom = new Room(rs.getInt(1), rs.getBoolean(2), rs.getString(3), rs.getString(4), rs.getInt(5));
+                output[index] = newRoom;
+                // System.out.println(newRoom.toString());
+                index++;
             }
 
         } catch (SQLException e) {
@@ -153,6 +173,11 @@ public class DataManager {
     public boolean containsId(int id){
         int left = 0;
         int right = rooms.length -1;
+
+        System.out.println(rooms.length);
+        if(rooms.length == 0){
+            return false;
+        }
 
         while(left <= right){
             int mid = left + (right - left) / 2;

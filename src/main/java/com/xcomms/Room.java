@@ -1,11 +1,14 @@
 package com.xcomms;
 
+import java.util.HashSet;
+
 public class Room {
     public int id = 0;
     public boolean isPrivate;
     public String name;
     public String password;
     public int capacity;
+    public HashSet<String> members = new HashSet<String>();
     
     public Room(int room, boolean isPrivate, String name, String password, int capacity){
         this.id = room;

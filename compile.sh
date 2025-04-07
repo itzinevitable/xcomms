@@ -1,3 +1,3 @@
 git pull
 mvn clean package 
-git push origin main
+git commit main
